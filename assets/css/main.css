@@ -1,5 +1,5 @@
 @import url(fontawesome-all.min.css);
-@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400';
+@import 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400&display=swap';
 
 /*
 	Stellar by HTML5 UP
@@ -3305,7 +3305,7 @@ input, select, textarea {
 			position: fixed;
 			top: 0;
 			padding: 0.5em 1em;
-			background-color: rgba(247, 247, 247, 0.95);
+			background-color: #f7f7f7;
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
 			z-index: 10000;
@@ -3783,3 +3783,5 @@ input, select, textarea {
 			}
 
 		}
+/* Pankow fix: constrain the header logo (logo.webp is 1600px; the template's svg was 85px) */
+#header.alt .logo img { width: 100px; height: 100px; max-width: 100px; }
