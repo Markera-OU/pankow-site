@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pankow — Overdue invoices, chased automatically</title>
+<meta name="description" content="Pankow picks up invoices already overdue in QuickBooks Online and Xero, and chases them in your firm's voice — email, SMS, statement, and pay link — until they are paid.">
+<style>
+  :root { --ink:#14213d; --muted:#5b6b82; --accent:#0f7b4d; --accent-dark:#0a5c3a; --bg:#f7f9f7; --card:#ffffff; --line:#e3e9e2; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); line-height:1.6; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .wrap { max-width:1020px; margin:0 auto; padding:0 22px; }
+  header { background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+  header .wrap { display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .logo { font-weight:800; font-size:20px; color:var(--ink); letter-spacing:-.02em; }
+  .logo span { color:var(--accent); }
+  nav a { margin-left:22px; color:var(--muted); font-size:15px; }
+  nav a:hover { color:var(--ink); }
+  .btn { display:inline-block; background:var(--accent); color:#fff; font-weight:600; padding:11px 22px; border-radius:8px; font-size:16px; }
+  .btn:hover { background:var(--accent-dark); text-decoration:none; }
+  .btn-ghost { background:#fff; color:var(--accent); border:1px solid var(--accent); }
+  .btn-ghost:hover { background:#eaf5ee; }
+  .hero { text-align:center; padding:76px 22px 56px; }
+  .hero h1 { font-size:44px; line-height:1.15; letter-spacing:-.03em; max-width:760px; margin:0 auto 18px; }
+  .hero p { font-size:19px; color:var(--muted); max-width:640px; margin:0 auto 28px; }
+  .hero .cta-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .hero .note { margin-top:16px; font-size:14px; color:var(--muted); }
+  .badge { display:inline-block; background:#e2f3e9; color:var(--accent-dark); font-weight:600; font-size:13px; padding:5px 12px; border-radius:999px; margin-bottom:18px; }
+  section { padding:56px 0; }
+  section h2 { font-size:30px; letter-spacing:-.02em; text-align:center; margin-bottom:12px; }
+  section .sub { text-align:center; color:var(--muted); max-width:640px; margin:0 auto 36px; font-size:17px; }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:26px; }
+  .card h3 { font-size:18px; margin-bottom:8px; }
+  .card p { color:var(--muted); font-size:15px; }
+  .num { display:inline-block; width:30px; height:30px; line-height:30px; text-align:center; border-radius:50%; background:var(--accent); color:#fff; font-weight:700; font-size:14px; margin-bottom:12px; }
+  .features { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .features .card h3::before { content:"✓ "; color:var(--accent); }
+  .pricing { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+  .plan { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:26px; display:flex; flex-direction:column; }
+  .plan.pop { border:2px solid var(--accent); }
+  .plan h3 { font-size:19px; }
+  .plan .price { font-size:34px; font-weight:800; letter-spacing:-.02em; margin:10px 0 4px; }
+  .plan .per { color:var(--muted); font-size:14px; margin-bottom:16px; }
+  .plan ul { list-style:none; margin-bottom:20px; flex:1; }
+  .plan li { font-size:15px; color:var(--muted); padding:5px 0 5px 24px; position:relative; }
+  .plan li::before { content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+  .plan .btn { text-align:center; }
+  .faq { max-width:720px; margin:0 auto; }
+  .faq details { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 22px; margin-bottom:12px; }
+  .faq summary { font-weight:600; cursor:pointer; font-size:16px; }
+  .faq p { color:var(--muted); margin-top:10px; font-size:15px; }
+  footer { border-top:1px solid var(--line); background:#fff; padding:34px 0; color:var(--muted); font-size:14px; }
+  footer .wrap { display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+  @media (max-width:820px) {
+    .hero h1 { font-size:32px; }
+    .steps, .features, .pricing { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo">Pankow</div>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#pricing" style="padding:8px 16px; margin-left:22px;">Get Pankow</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="badge">For QuickBooks Online and Xero</div>
+    <h1>Overdue invoices, chased automatically</h1>
+    <p>Pankow picks up invoices already overdue and chases them in your firm&rsquo;s voice — email, SMS, statement, and pay link — until they are paid. No more manual reminders.</p>
+    <div class="cta-row">
+      <a class="btn" href="mailto:support@pankow.ai?subject=Pankow%20early%20access">Get early access</a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="note">Coming soon to the QuickBooks and Xero App Stores.</p>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">Connect once. Pankow finds what is already overdue and starts chasing it.</p>
+    <div class="steps">
+      <div class="card">
+        <div class="num">1</div>
+        <h3>Connect QuickBooks or Xero</h3>
+        <p>Connect your accounting software in one click. Pankow reads your open invoices and finds the ones already overdue — including invoices that went overdue before you connected.</p>
+      </div>
+      <div class="card">
+        <div class="num">2</div>
+        <h3>Pankow chases each debtor</h3>
+        <p>For each customer and invoice age, Pankow sends a sequence of reminders in your firm&rsquo;s voice — email, SMS, statement, and a pay link. The tone adapts to each debtor&rsquo;s payment history.</p>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <h3>You get paid, Pankow learns</h3>
+        <p>When an invoice is paid, the sequence stops and Pankow records how that debtor paid. The next chase is better because Pankow knows what worked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <h2>What Pankow does</h2>
+    <p class="sub">Built for the small firms that the big dunning tools ignore.</p>
+    <div class="features">
+      <div class="card">
+        <h3>Retroactive pickup</h3>
+        <p>Pankow chases invoices that are already overdue when you connect. Native reminders only cover new invoices — Pankow covers the backlog too.</p>
+      </div>
+      <div class="card">
+        <h3>Per-customer sequences</h3>
+        <p>Each debtor gets a sequence matched to their invoice age and payment history — gentle for a good payer who slipped once, firmer for a chronic late payer.</p>
+      </div>
+      <div class="card">
+        <h3>Your firm&rsquo;s voice</h3>
+        <p>Reminders are drafted in your firm&rsquo;s voice, learned from your past emails. They read like you wrote them, not like a robot.</p>
+      </div>
+      <div class="card">
+        <h3>Pay link and late fees</h3>
+        <p>Every reminder carries a pay link, and late fees can be added where your terms allow. Debtors can pay without replying to an email.</p>
+      </div>
+      <div class="card">
+        <h3>Payment-behaviour history</h3>
+        <p>Pankow remembers how each debtor has paid before, so sequences get smarter over time instead of starting from scratch.</p>
+      </div>
+      <div class="card">
+        <h3>Accountant white-label</h3>
+        <p>Accountants can run Pankow for their clients under their own firm&rsquo;s identity, with one console for all clients.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <p class="sub">Priced for micro firms. No per-invoice fees beyond SMS.</p>
+    <div class="pricing">
+      <div class="plan">
+        <h3>Starter</h3>
+        <div class="price">$19</div>
+        <div class="per">per month, up to 50 open invoices</div>
+        <ul>
+          <li>Retroactive overdue pickup</li>
+          <li>Per-customer sequences (email)</li>
+          <li>Pay link on every reminder</li>
+          <li>Payment-behaviour history</li>
+        </ul>
+        <a class="btn btn-ghost" href="mailto:support@pankow.ai?subject=Pankow%20Starter">Get Starter</a>
+      </div>
+      <div class="plan pop">
+        <h3>Growth</h3>
+        <div class="price">$39</div>
+        <div class="per">per month, up to 200 open invoices</div>
+        <ul>
+          <li>Everything in Starter</li>
+          <li>SMS reminders (+$0.10 per SMS)</li>
+          <li>Statements and late fees</li>
+        </ul>
+        <a class="btn" href="mailto:support@pankow.ai?subject=Pankow%20Growth">Get Growth</a>
+      </div>
+      <div class="plan">
+        <h3>Accountant</h3>
+        <div class="price">$99</div>
+        <div class="per">per month, 10 clients</div>
+        <ul>
+          <li>Everything in Growth</li>
+          <li>White-label console for clients</li>
+          <li>One console, all clients</li>
+        </ul>
+        <a class="btn btn-ghost" href="mailto:support@pankow.ai?subject=Pankow%20Accountant">Get Accountant</a>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:26px; font-size:14px;">Prices in USD, billed monthly. No setup fees.</p>
+  </div>
+</section>
+
+<section id="faq" style="background:#fff; border-top:1px solid var(--line);">
+  <div class="wrap">
+    <h2>Frequently asked questions</h2>
+    <div class="faq">
+      <details>
+        <summary>Does Pankow guarantee I will get paid?</summary>
+        <p>No. Pankow chases professionally and persistently, and makes it easy for debtors to pay, but payment is the debtor&rsquo;s decision. We never promise payment.</p>
+      </details>
+      <details>
+        <summary>Which accounting software does Pankow work with?</summary>
+        <p>QuickBooks Online and Xero.</p>
+      </details>
+      <details>
+        <summary>What about invoices that are already overdue?</summary>
+        <p>That is the point. Pankow picks up invoices already overdue when you connect and starts chasing them. Native reminders only cover invoices that go overdue after setup.</p>
+      </details>
+      <details>
+        <summary>Will reminders sound like my firm?</summary>
+        <p>Yes. Pankow learns your firm&rsquo;s voice from your past emails and drafts reminders to match it. You can review the wording before anything is sent.</p>
+      </details>
+      <details>
+        <summary>Can my accountant run Pankow for me?</summary>
+        <p>Yes. Accountants can use the Accountant plan to run Pankow for their clients, with each client&rsquo;s reminders sent under that client&rsquo;s own identity.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>Pankow is a product of Markera OÜ, Tallinn, Estonia.</div>
+    <div>Questions? <a href="mailto:support@pankow.ai">support@pankow.ai</a></div>
+  </div>
+</footer>
+</body>
+</html>
