@@ -6,7 +6,7 @@
 <title>Pankow — Overdue invoices, chased automatically</title>
 <meta name="description" content="Pankow picks up invoices already overdue in QuickBooks Online and Xero, and chases them in your firm's voice. Email, SMS, statement, and pay link. Until they are paid.">
 <style>
-  :root { --ink:#1d2733; --muted:#5a6673; --accent:#0d7a4a; --bg:#fbfaf7; --card:#ffffff; --line:#e5e1d8; }
+  :root { --ink:#1d2733; --muted:#5a6673; --accent:#0d7a4a; --bg:#fbfaf7; --card:#ffffff; --line:#e5e1d8; --good:#0d7a4a; --goodbg:#eaf5ee; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--ink); background:var(--bg); line-height:1.65; }
   a { color:var(--accent); text-decoration:none; }
@@ -21,18 +21,38 @@
   .hero { padding:72px 0 48px; }
   .hero h1 { font-family:Georgia,"Times New Roman",serif; font-size:46px; line-height:1.15; letter-spacing:-.01em; font-weight:700; max-width:640px; }
   .hero p { font-size:18px; color:var(--muted); max-width:600px; margin:20px 0 28px; }
-  .btn { display:inline-block; background:var(--accent); color:#fff; font-weight:600; padding:12px 24px; border-radius:6px; font-size:16px; }
+  .btn { display:inline-block; background:var(--accent); color:#fff; font-weight:600; padding:12px 24px; border-radius:6px; font-size:16px; border:0; cursor:pointer; }
   .btn:hover { background:#0a5c38; text-decoration:none; }
   .btn-outline { background:transparent; color:var(--ink); border:1px solid #c9c4b8; margin-left:10px; }
   .btn-outline:hover { background:#f0ede6; }
-  .example { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:8px 0 48px; }
-  .example .label { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700; margin-bottom:10px; }
-  .example p { font-size:15px; color:var(--muted); }
-  .example p strong { color:var(--ink); }
-  .example .inv { background:#eaf5ee; border-radius:6px; padding:12px 14px; margin-top:12px; font-size:15px; }
+  .btn:disabled { background:#9aa8bd; cursor:default; }
   section { padding:40px 0; border-top:1px solid var(--line); }
   section h2 { font-family:Georgia,"Times New Roman",serif; font-size:28px; letter-spacing:-.01em; margin-bottom:10px; }
   section .intro { color:var(--muted); font-size:16px; max-width:620px; margin-bottom:28px; }
+  .demo { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px; margin:8px 0 48px; }
+  .demo-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px; }
+  .demo-head .title { font-weight:700; font-size:17px; }
+  .demo-head .status { font-size:14px; font-weight:700; color:#b3541e; background:#fdf3ec; border-radius:999px; padding:5px 12px; }
+  .demo-head .status.paid { color:var(--good); background:var(--goodbg); }
+  .invoice { border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:18px; background:#fff; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  .invoice .num { font-weight:700; font-size:16px; }
+  .invoice .amt { font-weight:800; font-size:22px; }
+  .invoice .meta { color:var(--muted); font-size:14px; width:100%; }
+  .timeline { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:18px; }
+  .tl-step { border:1px solid var(--line); border-radius:10px; padding:14px; font-size:14px; color:var(--muted); }
+  .tl-step .day { font-weight:700; color:var(--ink); display:block; margin-bottom:2px; }
+  .tl-step.active { border-color:var(--accent); background:var(--goodbg); color:var(--ink); }
+  .tl-step.active .day { color:var(--accent); }
+  .reminder { border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:8px; padding:16px 18px; margin-bottom:12px; background:#fff; animation:fadein .35s ease; }
+  @keyframes fadein { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  .reminder .r-day { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:700; }
+  .reminder .r-title { font-weight:700; font-size:16px; margin:4px 0 6px; }
+  .reminder .r-body { font-size:15px; color:var(--muted); }
+  .paid-msg { display:none; background:var(--goodbg); border:1px solid var(--good); border-radius:10px; padding:18px 20px; margin-top:16px; font-size:16px; }
+  .paid-msg.show { display:block; }
+  .paid-msg strong { color:var(--good); }
+  .demo-actions { margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .link-btn { background:none; border:0; color:var(--muted); font-size:14px; cursor:pointer; padding:12px 0; text-decoration:underline; }
   .steps p { margin-bottom:18px; font-size:16px; max-width:640px; }
   .steps p strong { font-weight:700; }
   .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
@@ -53,7 +73,7 @@
   footer .wrap { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
   @media (max-width:760px) {
     .hero h1 { font-size:34px; }
-    .grid, .pricing { grid-template-columns:1fr; }
+    .grid, .pricing, .timeline { grid-template-columns:1fr; }
     .btn-outline { margin-left:0; margin-top:10px; }
   }
 </style>
@@ -63,6 +83,7 @@
   <div class="wrap">
     <div class="logo"><img src="logo.webp" alt="Pankow logo">Pankow</div>
     <nav>
+      <a href="#demo">Try it</a>
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
@@ -75,15 +96,33 @@
     <h1>Your overdue invoices are sitting there. Pankow chases them.</h1>
     <p>Pankow picks up invoices already overdue in QuickBooks Online and Xero, and chases them in your firm&rsquo;s voice. Email, SMS, statement, and a pay link. Until they are paid.</p>
     <a class="btn" href="mailto:support@pankow.ai?subject=Pankow%20early%20access">Get early access</a>
-    <a class="btn btn-outline" href="#how">How it works</a>
+    <a class="btn btn-outline" href="#demo">Try it below</a>
   </div>
 
-  <div class="example">
-    <div class="label">A real example</div>
-    <p><strong>Invoice 1042, $2,400, 14 days overdue.</strong> It has been sitting in QuickBooks since the day it went overdue. Pankow sends the first reminder today, in your firm&rsquo;s voice.</p>
-    <div class="inv"><strong>Day 14:</strong> A polite email with a pay link. <strong>Day 21:</strong> A firmer email and an SMS. <strong>Day 28:</strong> A statement with a late fee, if your terms allow it.</div>
-    <p style="margin-top:12px;">When it is paid, the sequence stops. Pankow records how that debtor paid, so the next chase is better.</p>
-  </div>
+  <section id="demo" style="border-top:0; padding-top:0;">
+    <div class="demo">
+      <div class="demo-head">
+        <div class="title">Try it. Run the chase on this invoice.</div>
+        <div class="status" id="invStatus">14 days overdue</div>
+      </div>
+      <div class="invoice">
+        <div class="num">Invoice 1042 &middot; Sarah Meyer Ltd</div>
+        <div class="amt">$2,400</div>
+        <div class="meta">Due 14 days ago. No reminder sent yet.</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-step" id="tl1"><span class="day">Day 14</span>Polite email with a pay link</div>
+        <div class="tl-step" id="tl2"><span class="day">Day 21</span>Firmer email and an SMS</div>
+        <div class="tl-step" id="tl3"><span class="day">Day 28</span>Statement with a late fee</div>
+      </div>
+      <div id="reminderBox"></div>
+      <div class="paid-msg" id="paidMsg"><strong>Paid on Day 32.</strong> The sequence stopped the moment the payment landed, and Pankow recorded how this debtor paid. Next time, the chase starts smarter.</div>
+      <div class="demo-actions">
+        <button class="btn" id="nextBtn" onclick="nextReminder()">Send the next reminder</button>
+        <button class="link-btn" onclick="resetDemo()">Run it again</button>
+      </div>
+    </div>
+  </section>
 
   <section id="how">
     <h2>How it works</h2>
@@ -173,5 +212,59 @@
     <div><a href="mailto:support@pankow.ai">support@pankow.ai</a></div>
   </div>
 </footer>
+
+<script>
+var step = 0;
+var steps = [
+  { day: 'Day 14', title: 'Polite email with a pay link', body: 'Hi Sarah, a friendly reminder that invoice 1042 for $2,400 was due 14 days ago. You can pay here: Pay $2,400. Thanks, Acme Ltd.' },
+  { day: 'Day 21', title: 'Firmer email and an SMS', body: 'Hi Sarah, invoice 1042 ($2,400) is now 21 days overdue. Please pay this week to avoid a late fee. Pay here: Pay $2,400. Acme Ltd.' },
+  { day: 'Day 28', title: 'Statement with a late fee', body: 'Statement for Sarah Meyer Ltd. Invoice 1042: $2,400, plus a $48 late fee. Total due: $2,448. Pay here: Pay $2,448. Acme Ltd.' }
+];
+function nextReminder() {
+  if (step >= steps.length) return;
+  var s = steps[step];
+  document.getElementById('tl' + (step + 1)).classList.add('active');
+  var box = document.getElementById('reminderBox');
+  var card = document.createElement('div');
+  card.className = 'reminder';
+  var d = document.createElement('div'); d.className = 'r-day'; d.textContent = s.day;
+  var t = document.createElement('div'); t.className = 'r-title'; t.textContent = s.title;
+  var b = document.createElement('div'); b.className = 'r-body'; b.textContent = s.body;
+  card.appendChild(d); card.appendChild(t); card.appendChild(b);
+  box.appendChild(card);
+  step++;
+  var status = document.getElementById('invStatus');
+  status.textContent = s.day.replace('Day ', '') + ' days overdue';
+  if (step === steps.length) {
+    var btn = document.getElementById('nextBtn');
+    btn.textContent = 'Mark as paid';
+    btn.onclick = markPaid;
+  }
+}
+function markPaid() {
+  document.getElementById('paidMsg').classList.add('show');
+  var btn = document.getElementById('nextBtn');
+  btn.disabled = true;
+  btn.textContent = 'Paid';
+  var status = document.getElementById('invStatus');
+  status.textContent = 'Paid on Day 32';
+  status.classList.add('paid');
+}
+function resetDemo() {
+  step = 0;
+  document.getElementById('reminderBox').innerHTML = '';
+  document.getElementById('paidMsg').classList.remove('show');
+  ['tl1', 'tl2', 'tl3'].forEach(function (id) {
+    document.getElementById(id).classList.remove('active');
+  });
+  var btn = document.getElementById('nextBtn');
+  btn.disabled = false;
+  btn.textContent = 'Send the next reminder';
+  btn.onclick = nextReminder;
+  var status = document.getElementById('invStatus');
+  status.textContent = '14 days overdue';
+  status.classList.remove('paid');
+}
+</script>
 </body>
 </html>
