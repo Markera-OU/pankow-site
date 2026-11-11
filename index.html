@@ -6,7 +6,7 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pankow: Overdue invoices, chased automatically</title>
-<meta name="description" content="Pankow picks up invoices already overdue in QuickBooks Online and Xero, and chases them in your firm's voice. Email, SMS, statement, and pay link. Until they are paid.">
+<meta name="description" content="Pankow picks up invoices already overdue in QuickBooks Online and Xero, and chases them in your firm's voice. Email reminders and statements. Until they are paid.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -230,7 +230,7 @@
   <div class="hero">
     <div class="kicker">QUICKBOOKS ONLINE AND XERO</div>
     <h1>Money owed.<br><span class="accent">Chased.</span></h1>
-    <p>Pankow picks up invoices already overdue in QuickBooks Online and Xero, and chases them in your firm&rsquo;s voice. <strong>Email, SMS, statement, and a pay link.</strong> Until they are paid.</p>
+    <p>Pankow picks up invoices already overdue in QuickBooks Online and Xero, and chases them in your firm&rsquo;s voice. <strong>Email reminders and statements.</strong> Until they are paid.</p>
     <div class="cta-row">
       <a class="btn" href="mailto:support@pankow.ai?subject=Pankow%20early%20access">Get early access</a>
       <a class="btn btn-ghost" href="#demo">Try the demo</a>
@@ -253,9 +253,9 @@
         <div class="meta">Due 14 days ago. No reminder sent yet.</div>
       </div>
       <div class="timeline">
-        <div class="tl-step" id="tl1"><span class="day">Day 14</span>Polite email with a pay link</div>
-        <div class="tl-step" id="tl2"><span class="day">Day 21</span>Firmer email and an SMS</div>
-        <div class="tl-step" id="tl3"><span class="day">Day 28</span>Statement with a late fee</div>
+        <div class="tl-step" id="tl1"><span class="day">Day 14</span>Polite email</div>
+        <div class="tl-step" id="tl2"><span class="day">Day 21</span>Firmer email</div>
+        <div class="tl-step" id="tl3"><span class="day">Day 28</span>Statement of account</div>
       </div>
       <div id="reminderBox"></div>
       <div class="paid-msg" id="paidMsg"><strong>Paid on Day 32.</strong> The sequence stopped the moment the payment landed, and Pankow recorded how this debtor paid. Next time, the chase starts smarter.</div>
@@ -274,7 +274,7 @@
       <li><span class="n">01</span><div><h3>Retroactive pickup</h3><p>Pankow chases invoices already overdue when you connect. Native reminders only cover new invoices.</p></div></li>
       <li><span class="n">02</span><div><h3>Per-debtor sequences</h3><p>Each debtor gets a sequence matched to their invoice age and payment history. Not one template for everyone.</p></div></li>
       <li><span class="n">03</span><div><h3>Your firm&rsquo;s voice</h3><p>Reminders are drafted in your firm&rsquo;s voice, learned from your past emails.</p></div></li>
-      <li><span class="n">04</span><div><h3>Pay link on every reminder</h3><p>Every reminder carries a pay link. A debtor can pay without replying to an email.</p></div></li>
+      <li><span class="n">04</span><div><h3>Statements of account</h3><p>Each sequence includes a statement listing everything the debtor owes, so there is no dispute about the amount.</p></div></li>
       <li><span class="n">05</span><div><h3>Payment behaviour history</h3><p>Pankow remembers how each debtor has paid before, so sequences get smarter over time.</p></div></li>
       <li><span class="n">06</span><div><h3>Accountant white label</h3><p>Accountants can run Pankow for their clients under their own firm&rsquo;s identity, with one console for all clients.</p></div></li>
     </ol>
@@ -299,12 +299,12 @@
       <div class="ba-cell before">
         <div class="tag">BEFORE</div>
         <div class="big">$2,400 sitting overdue.</div>
-        <p>No reminder sent, no pay link, no follow up. It just sits there.</p>
+        <p>No reminder sent, no follow up. It just sits there.</p>
       </div>
       <div class="ba-cell after">
         <div class="tag">AFTER</div>
         <div class="big">Paid on Day 32.</div>
-        <p>Three reminders, one pay link, one late fee. The sequence stopped the moment the money landed.</p>
+        <p>Three reminders and a statement. The sequence stopped the moment the money landed.</p>
       </div>
     </div>
   </section>
@@ -312,20 +312,20 @@
   <section id="pricing">
     <div class="sec-label">05 / PRICING</div>
     <h2>Priced for micro firms.</h2>
-    <p class="intro">No per-invoice fees beyond SMS. Prices in USD, billed monthly. No setup fees.</p>
+    <p class="intro">No per-invoice fees. Prices in USD, billed monthly. No setup fees.</p>
     <div class="pricing">
       <div class="plan">
         <h3>Starter</h3>
         <div class="price">$19<span>/mo</span></div>
         <div class="per">50 OPEN INVOICES</div>
-        <p>Retroactive overdue pickup, per-debtor sequences by email, pay link on every reminder, payment behaviour history.</p>
+        <p>Retroactive overdue pickup, per-debtor sequences by email, statements of account, payment behaviour history.</p>
         <a class="btn btn-ghost" href="mailto:support@pankow.ai?subject=Pankow%20Starter">Get Starter</a>
       </div>
       <div class="plan hot">
         <h3>Growth</h3>
         <div class="price">$39<span>/mo</span></div>
         <div class="per">200 OPEN INVOICES</div>
-        <p>Everything in Starter, plus SMS reminders at $0.10 each, statements, and late fees.</p>
+        <p>Everything in Starter, for up to 200 open invoices.</p>
         <a class="btn" href="mailto:support@pankow.ai?subject=Pankow%20Growth">Get Growth</a>
       </div>
       <div class="plan">
@@ -377,9 +377,9 @@
 <script>
 var step = 0;
 var steps = [
-  { day: 'Day 14', title: 'Polite email with a pay link', body: 'Hi Sarah, a friendly reminder that invoice 1042 for $2,400 was due 14 days ago. You can pay here: Pay $2,400. Thanks, Acme Ltd.' },
-  { day: 'Day 21', title: 'Firmer email and an SMS', body: 'Hi Sarah, invoice 1042 ($2,400) is now 21 days overdue. Please pay this week to avoid a late fee. Pay here: Pay $2,400. Acme Ltd.' },
-  { day: 'Day 28', title: 'Statement with a late fee', body: 'Statement for Sarah Meyer Ltd. Invoice 1042: $2,400, plus a $48 late fee. Total due: $2,448. Pay here: Pay $2,448. Acme Ltd.' }
+  { day: 'Day 14', title: 'Polite email', body: 'Hi Sarah, a friendly reminder that invoice 1042 for $2,400 was due 14 days ago. Thanks, Acme Ltd.' },
+  { day: 'Day 21', title: 'Firmer email', body: 'Hi Sarah, invoice 1042 ($2,400) is now 21 days overdue. Please pay this week. Acme Ltd.' },
+  { day: 'Day 28', title: 'Statement of account', body: 'Statement for Sarah Meyer Ltd. Invoice 1042: $2,400. Total due: $2,400. Acme Ltd.' }
 ];
 function nextReminder() {
   if (step >= steps.length) return;
