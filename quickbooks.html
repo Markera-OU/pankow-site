@@ -229,6 +229,8 @@
         <form id="access-form">
           <label for="email">Work email</label>
           <input id="email" type="email" name="email" placeholder="you@yourfirm.com" required autocomplete="email">
+          <!-- Honeypot (see backend): real users never see or fill this; bots do. Filled = the request is silently dropped. -->
+          <input id="website" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
           <button class="btn" type="submit" id="submit-btn">Request access</button>
           <div id="form-msg" role="status"></div>
         </form>
@@ -260,7 +262,7 @@
     fetch('https://backend-production-8ab6.up.railway.app/api/auth/request-access', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
+      body: JSON.stringify({ email: email, website: document.getElementById('website').value })
     })
     .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
     .then(function (res) {
