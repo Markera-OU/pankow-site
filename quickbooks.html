@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pankow for QuickBooks Online: overdue invoices, chased automatically</title>
+<meta name="description" content="Pankow connects to QuickBooks Online, picks up invoices already overdue, and chases them in your firm's voice. Email, SMS, statement, and pay link. Until they are paid.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111111;
+    --muted: #555555;
+    --line: #e5e5e5;
+    --green: #0d7a4a;
+    --green-dark: #0a5c38;
+    --amber: #b45309;
+    --bg: #ffffff;
+    --soft: #f7f7f5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--green); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  header .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; letter-spacing: -0.02em; color: var(--ink); }
+  .brand:hover { text-decoration: none; }
+  .brand img { width: 32px; height: 32px; border-radius: 7px; display: block; }
+  nav { display: flex; align-items: center; gap: 26px; }
+  nav a { color: var(--muted); font-size: 15px; font-weight: 700; }
+  nav a:hover { color: var(--ink); text-decoration: none; }
+  .btn {
+    display: inline-block; background: var(--green); color: #fff;
+    font-weight: 800; font-size: 16px; padding: 13px 24px; border-radius: 10px;
+    border: 0; cursor: pointer; line-height: 1.2; text-align: center;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .btn:hover { background: var(--green-dark); text-decoration: none; transform: translateY(-1px); }
+  .btn:disabled { background: #c9c9c9; cursor: default; transform: none; }
+  header .btn { padding: 10px 18px; font-size: 14px; }
+
+  .hero { padding: 72px 0 56px; }
+  .kicker {
+    font-size: 13px; font-weight: 800; letter-spacing: .22em;
+    color: var(--green); margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900; letter-spacing: -0.03em; line-height: 1.05;
+    max-width: 780px;
+  }
+  .hero h1 .accent { color: var(--green); }
+  .hero p { font-size: 19px; color: var(--muted); max-width: 680px; margin: 24px 0 30px; }
+  .hero p strong { color: var(--ink); }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  section h2 { font-size: 30px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .intro { color: var(--muted); font-size: 18px; max-width: 680px; margin-bottom: 36px; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .step { background: var(--soft); border-radius: 14px; padding: 26px; }
+  .step .n { font-size: 13px; font-weight: 800; letter-spacing: .18em; color: var(--green); margin-bottom: 10px; }
+  .step h3 { font-size: 20px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .step p { color: var(--muted); font-size: 16px; }
+  .bullets { list-style: none; max-width: 720px; }
+  .bullets li { padding: 12px 0 12px 30px; position: relative; border-bottom: 1px solid var(--line); font-size: 17px; }
+  .bullets li::before { content: ""; position: absolute; left: 0; top: 22px; width: 10px; height: 10px; border-radius: 50%; background: var(--green); }
+  .bullets li strong { font-weight: 800; }
+  .bullets li span { color: var(--muted); }
+  .note {
+    background: var(--soft); border-left: 4px solid var(--green);
+    border-radius: 0 12px 12px 0; padding: 20px 24px; max-width: 720px;
+    font-size: 16px; color: var(--muted); margin-top: 28px;
+  }
+  .note strong { color: var(--ink); }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .plan { border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+  .plan.hot { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+  .plan h3 { font-size: 19px; font-weight: 800; }
+  .plan .price { font-size: 34px; font-weight: 900; letter-spacing: -0.02em; margin: 10px 0 4px; }
+  .plan .price span { font-size: 15px; font-weight: 700; color: var(--muted); }
+  .plan p { color: var(--muted); font-size: 15px; }
+  .form-card { background: var(--soft); border-radius: 14px; padding: 32px; max-width: 560px; }
+  .form-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .form-card p { color: var(--muted); font-size: 16px; margin-bottom: 20px; }
+  .form-card label { display: block; font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .form-card input {
+    width: 100%; font: inherit; font-size: 16px; padding: 12px 14px;
+    border: 1px solid var(--line); border-radius: 10px; background: #fff; margin-bottom: 16px;
+  }
+  .form-card input:focus { outline: 2px solid var(--green); border-color: var(--green); }
+  #form-msg { font-size: 15px; margin-top: 14px; min-height: 22px; }
+  #form-msg.ok { color: var(--green); font-weight: 700; }
+  #form-msg.err { color: #b91c1c; font-weight: 700; }
+  footer { border-top: 1px solid var(--line); padding: 40px 0 48px; color: var(--muted); font-size: 15px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  @media (max-width: 820px) {
+    .steps, .plans { grid-template-columns: 1fr; }
+    .hero { padding: 56px 0 44px; }
+    nav a:not(.btn) { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="/"><img src="logo.webp" alt=""> Pankow</a>
+    <nav>
+      <a href="/#how">How it works</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/privacy-policy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a class="btn" href="#get-started">Get started</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <div class="kicker">PANKOW FOR QUICKBOOKS ONLINE</div>
+      <h1>Your overdue QuickBooks invoices, <span class="accent">chased automatically.</span></h1>
+      <p>Pankow connects to QuickBooks Online, picks up the invoices that are <strong>already overdue</strong>, and chases them in your firm's voice. Email, SMS, statement, and pay link. Until they are paid.</p>
+      <a class="btn" href="#get-started">Request access</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="intro">No setup, no importing, no retyping. Connect once and Pankow does the chasing.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="n">01</div>
+          <h3>Connect</h3>
+          <p>Sign in to QuickBooks Online from Pankow and authorise read access to your invoices and contacts. Pankow reads only what it needs to chase: invoice numbers, amounts, due dates, and your customers' names and email addresses.</p>
+        </div>
+        <div class="step">
+          <div class="n">02</div>
+          <h3>Chase</h3>
+          <p>Pankow builds a reminder sequence for each overdue invoice, in your firm's voice, and sends it on schedule: a polite email first, then firmer reminders, a statement, and a late fee where you allow it. Every step is logged and visible.</p>
+        </div>
+        <div class="step">
+          <div class="n">03</div>
+          <h3>Paid</h3>
+          <p>When a customer pays, the invoice is marked paid and the chase stops. Pankow syncs with QuickBooks, so a payment recorded there stops the sequence too. Nothing is chased after it is paid.</p>
+        </div>
+      </div>
+      <div class="note"><strong>Retroactive pickup.</strong> Pankow does not wait for new invoices to go overdue. The moment you connect, it picks up the invoices that are already overdue today and starts chasing them. That is where most of the recovered money is.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>What Pankow does and does not do</h2>
+      <div class="bullets">
+        <li><strong>Chases overdue invoices</strong> <span>with a sequence of emails, SMS, and statements in your firm's voice.</span></li>
+        <li><strong>Syncs with QuickBooks Online</strong> <span>so invoices, due dates, and payments stay in step.</span></li>
+        <li><strong>Stops the moment an invoice is paid</strong> <span>whether the payment is recorded in QuickBooks or marked in Pankow.</span></li>
+        <li><strong>Never moves money.</strong> <span>Pankow does not collect or process payments. Your customers pay you through your own payment link or method.</span></li>
+        <li><strong>Never promises payment.</strong> <span>Chasing improves the odds of being paid; it cannot guarantee a customer will pay.</span></li>
+        <li><strong>Never contacts the wrong people.</strong> <span>Reminders go only to the customers on your overdue invoices, and only about those invoices.</span></li>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Your data, and disconnecting</h2>
+      <p class="intro">You stay in control of the connection. Pankow reads invoices and contacts from QuickBooks Online to run the chase, and nothing else. Full details are in the <a href="/privacy-policy">privacy policy</a>.</p>
+      <div class="bullets">
+        <li><strong>Disconnect in Pankow</strong> <span>at any time from the dashboard. Pankow revokes its QuickBooks access and clears the stored tokens.</span></li>
+        <li><strong>Disconnect in QuickBooks</strong> <span>from Apps &gt; My Apps &gt; Pankow &gt; Disconnect. Pankow is notified, revokes the access, and clears the tokens.</span></li>
+        <li><strong>Deleting your data</strong> <span>on disconnect, your Pankow data is deleted on request. Email <a href="mailto:support@pankow.ai">support@pankow.ai</a>.</span></li>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <h2>Pricing</h2>
+      <p class="intro">Per firm, per month. No setup fee. Cancel any time.</p>
+      <div class="plans">
+        <div class="plan">
+          <h3>Starter</h3>
+          <div class="price">$19 <span>/ month</span></div>
+          <p>For one small firm. Up to 25 overdue invoices chased at a time.</p>
+        </div>
+        <div class="plan hot">
+          <h3>Growth</h3>
+          <div class="price">$39 <span>/ month</span></div>
+          <p>For a growing firm. Up to 100 overdue invoices, firmer sequences, SMS steps.</p>
+        </div>
+        <div class="plan">
+          <h3>Accountant</h3>
+          <div class="price">$99 <span>/ month</span></div>
+          <p>For accountants chasing for many clients. Multiple firms, one dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="get-started">
+    <div class="wrap">
+      <h2>Get started</h2>
+      <p class="intro">Pankow for QuickBooks Online is onboarding firms now. Leave your work email and we will enable your login.</p>
+      <div class="form-card">
+        <h3>Request access</h3>
+        <p>We will email you when your login is ready. Your login is a one-time code by email, no password.</p>
+        <form id="access-form">
+          <label for="email">Work email</label>
+          <input id="email" type="email" name="email" placeholder="you@yourfirm.com" required autocomplete="email">
+          <button class="btn" type="submit" id="submit-btn">Request access</button>
+          <div id="form-msg" role="status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Markera OÜ, Sepapaja tn 6, Tallinn 15551, Estonia</span>
+    <span><a href="mailto:support@pankow.ai">support@pankow.ai</a> &middot; <a href="/">pankow.ai</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('access-form');
+  var msg = document.getElementById('form-msg');
+  var btn = document.getElementById('submit-btn');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    if (!email) return;
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    msg.className = '';
+    msg.textContent = '';
+    fetch('https://backend-production-8ab6.up.railway.app/api/auth/request-access', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (res) {
+      if (res.ok) {
+        msg.className = 'ok';
+        msg.textContent = 'Thanks. We will email you when your login is ready.';
+        form.reset();
+      } else {
+        msg.className = 'err';
+        msg.textContent = (res.d && res.d.error) || 'Something went wrong. Email support@pankow.ai instead.';
+      }
+    })
+    .catch(function () {
+      msg.className = 'err';
+      msg.textContent = 'Could not send. Email support@pankow.ai instead.';
+    })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = 'Request access';
+    });
+  });
+})();
+</script>
+</body>
+</html>
